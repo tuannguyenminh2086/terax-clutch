@@ -31,6 +31,7 @@ export default defineEventHandler(async(event) => {
       expand: 'team',
     });
 
+    console.log(teamMemberships, 'teamMemberships')
 
     if (teamMemberships.length === 0) {
       // If the user isn't part of any team, we can stop here.
@@ -77,11 +78,24 @@ export default defineEventHandler(async(event) => {
         subscription: subscriptionsByTeamId[tm.team] || null,
     }));
 
+    if (teamIds.length > 0) {
+      const activityFilter = teamIds.map(id => `team.id = "${id}"`).join(' || ');
+      const teamActivity = await pb.collection('user_status').getFullList({
+        filter: activityFilter,
+        expand: 'user,active_task',
+      });
+      
+      // Attach to context to be used by a new API endpoint
+      event.context.teamActivity = teamActivity;
+    } 
+
     // Attach the user model to the event context
     event.context.user = {
       ...userRecord,
       teams: teams,
     };
+
+    
 
   } catch (error) {
     // If authRefresh fails (e.g., token is invalid), clear the auth store

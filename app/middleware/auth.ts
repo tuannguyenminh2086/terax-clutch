@@ -1,4 +1,4 @@
-import { useAuth } from "~/composable/useAuth";
+import { useAuth } from "~/composables/useAuth";
 
 export default defineNuxtRouteMiddleware(async (to) => {
   // This middleware should only run on the client-side

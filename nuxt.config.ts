@@ -13,7 +13,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils',
     '@nuxt/content',
-    'shadcn-nuxt'
+    'shadcn-nuxt',
+    'dayjs-nuxt'
   ],
   css: ['@/assets/css/tailwind.css'],
   vite: {
@@ -57,6 +58,8 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    pocketbaseAdminEmail: process.env.POCKETBASE_ADMIN_EMAIL,
+    pocketbaseAdminPassword: process.env.POCKETBASE_ADMIN_PASSWORD,
     public: {
       pocketbaseUrl: process.env.NUXT_PUBLIC_POCKETBASE_URL,
       clutchAuthCookieName: process.env.NUXT_PUBLIC_CLUTCH_AUTH_COOKIE_NAME,

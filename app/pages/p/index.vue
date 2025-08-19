@@ -1,8 +1,22 @@
 <template>
-    <div>Projects</div>
-    <div v-if="user && activeTeam" class="flex flex-col gap-2">
-    <h2>Welcome, {{ user.name }}!</h2>
-    <h3>Active Team: {{ activeTeam.name }}</h3>
+    <div class="space-y-6">
+        <PageHeader
+            title="Projects"
+            description="List of projects"
+        />
+
+        <div>
+            <Button
+                variant="default"
+                @click="createProject"
+                size="lg"
+                class="cursor-pointer"
+            >
+                Create Project
+            </Button>
+        </div>
+
+       <ProjectsList />
     </div>
 </template>
 <script setup lang="ts">
@@ -11,7 +25,16 @@ definePageMeta({
     layout: 'authenticated'
 })
 
-import { useAuth } from '@/composable/useAuth'
-const { user, activeTeam } = useAuth();
+useHead({
+    title: 'Projects'
+})
 
+import Button from '~/components/ui/button/Button.vue';
+import PageHeader from '~/components/common/PageHeader.vue';
+import ProjectsList from '~/components/projects/List.vue';
+
+
+const createProject = () => {
+    navigateTo('/p/create');
+}
 </script>

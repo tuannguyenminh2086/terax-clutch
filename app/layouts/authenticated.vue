@@ -1,9 +1,11 @@
 <template>
     <SidebarProvider>
         <AppSidebar />
-        <main id="main-content">
-            <SidebarTrigger />
-            <div class="p-5">
+        <main id="main-content" class="px-5 relative w-full">
+            <div class="flex items-center justify-between py-2">
+                <SidebarTrigger />
+            </div>
+            <div class="py-5">
                 <slot />
             </div>
         </main>

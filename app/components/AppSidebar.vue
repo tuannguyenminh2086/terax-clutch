@@ -11,9 +11,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '~/components/ui/sidebar'
-import { Home, Inbox, User2, ChevronUp } from 'lucide-vue-next'
+import { Home, Inbox, ChevronUp, SquareKanban } from 'lucide-vue-next'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '~/components/ui/dropdown-menu'
-import { useAuth } from '@/composable/useAuth'
+import { useAuth } from '~/composables/useAuth'
+import UserAvatar from '@/components/common/UserAvatar.vue'
 
 const { user, logout } = useAuth();
 
@@ -25,15 +26,16 @@ const items = [
     icon: Home,
   },
   {
+    title: "Tasks",
+    url: "/t",
+    icon: SquareKanban,
+  },
+  {
     title: "Projects",
     url: "/p",
     icon: Inbox,
   },
-  {
-    title: "Tasks",
-    url: "/t",
-    icon: Inbox,
-  },
+ 
 ];
 
 </script>
@@ -52,10 +54,10 @@ const items = [
           <SidebarMenu>
               <SidebarMenuItem v-for="item in items" :key="item.title">
                 <SidebarMenuButton asChild>
-                    <a :href="item.url" class="flex items-center gap-2">
+                    <NuxtLink :to="item.url" class="flex items-center gap-2">
                       <component :is="item.icon" />
                       <span>{{item.title}}</span>
-                    </a>
+                    </NuxtLink>
                 </SidebarMenuButton>
               </SidebarMenuItem>
           </SidebarMenu>
@@ -68,7 +70,8 @@ const items = [
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <SidebarMenuButton>
-                <User2 /> {{user?.name}}
+                <UserAvatar v-if="user" :user="user" />
+                <span v-if="user">{{user?.name}}</span>
                 <ChevronUp class="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
